@@ -146,48 +146,98 @@ string AddDelayToTimestamp(string hour, string minute, string second, string mil
 	s = stoi(second);
 	ms = stoi(millisecond);
 
+	string s_h, s_m, s_s, s_ms;
+
 	int HR=0, MIN=0, SEC=0, MLS=0;
-	
-	MLS = ms + DELAY;
-	while (MLS >= 1000) {
-		SEC++;
-		MLS -= 1000;
-	}
-
-	SEC += s;
-	while (SEC >= 60) {
-		MIN++;
-		SEC -= 60;
-	}
-
-	MIN += m;
-	while (MIN >= 60) {
-		HR++;
-		MIN -= 60;
-	}
-
-	HR += h;
-
-	string s_h = to_string(HR);
-	string s_m = to_string(MIN);
-	string s_s = to_string(SEC);
-	string s_ms = to_string(MLS);
-
-	if (HR < 10) {
-		s_h.insert(0, "0");
-	}
-	if (MIN < 10) {
-		s_m.insert(0, "0");
-	}
-	if (SEC < 10) {
-		s_s.insert(0, "0");
-	}
-	if (MLS < 100) {
-		if (MLS < 10) {
-			s_ms.insert(0, "00");
+	if(DELAY > 0){
+		MLS = ms + DELAY;
+		while (MLS >= 1000) {
+			SEC++;
+			MLS -= 1000;
 		}
-		else {
-			s_ms.insert(0, "0");
+
+		SEC += s;
+		while (SEC >= 60) {
+			MIN++;
+			SEC -= 60;
+		}
+
+		MIN += m;
+		while (MIN >= 60) {
+			HR++;
+			MIN -= 60;
+		}
+
+		HR += h;
+
+		s_h = to_string(HR);
+		s_m = to_string(MIN);
+		s_s = to_string(SEC);
+		s_ms = to_string(MLS);
+
+		if (HR < 10) {
+			s_h.insert(0, "0");
+		}
+		if (MIN < 10) {
+			s_m.insert(0, "0");
+		}
+		if (SEC < 10) {
+			s_s.insert(0, "0");
+		}
+		if (MLS < 100) {
+			if (MLS < 10) {
+				s_ms.insert(0, "00");
+			}
+			else {
+				s_ms.insert(0, "0");
+			}
+		}
+	}
+	else {
+		MLS = ms + DELAY;
+		while (MLS < 0) {
+			SEC--;
+			MLS += 1000;
+		}
+
+		SEC += s;
+		while (SEC < 0) {
+			MIN--;
+			SEC += 60;
+		}
+
+		MIN += m;
+		while (MIN < 0) {
+			HR--;
+			MIN += 60;
+		}
+
+		HR += h;
+		if (HR < 0) {
+			HR = 0;
+		}
+
+		s_h = to_string(HR);
+		s_m = to_string(MIN);
+		s_s = to_string(SEC);
+		s_ms = to_string(MLS);
+
+		if (HR < 10) {
+			s_h.insert(0, "0");
+		}
+		if (MIN < 10) {
+			s_m.insert(0, "0");
+		}
+		if (SEC < 10) {
+			s_s.insert(0, "0");
+		}
+		if (MLS < 100) {
+			if (MLS < 10) {
+				s_ms.insert(0, "00");
+			}
+			else {
+				s_ms.insert(0, "0");
+			}
 		}
 	}
 
