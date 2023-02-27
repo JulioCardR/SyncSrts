@@ -1,2 +1,2 @@
 # SyncSrts
-Adds positive or negative delay to subtitle files
+Adds positive or negative delay to srt files
