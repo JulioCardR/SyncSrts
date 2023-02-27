@@ -5,18 +5,32 @@
 
 using namespace std;
 
+string FILENAME;
+int DELAY;
+
 string GenNewFileName();
 void sync_subs(string newfile);
 string ChangeTimeStamps(string line);
 string CreateNewTimestamps(string s_h, string s_m, string s_s, string s_ms, string e_h, string e_m, string e_s, string e_ms);
 string AddDelayToTimestamp(string hour, string minute, string second, string millisecond);
 
-int main() {
+int main(int argc, char** argv) {
+	if (argc == 1) {
+		FILENAME = default_FILENAME;
+		DELAY = default_DELAY;
+	}
+	else {
+		if (argv[1] == "-h") {
+			cout << "sync subs.exe [FILENAME] [DELAY]" << endl;
+		}
+		FILENAME = argv[1];
+		DELAY = stoi(argv[2]);
+	}
 
 	string newfile = GenNewFileName();
 	
 	sync_subs(newfile);
-
+	
 	return 0;
 }
 
@@ -35,6 +49,7 @@ void sync_subs(string newfile) {
 
 	if (!OldFile) {
 		cout << "Couldn't open file" << endl;
+		
 	}else {
 		fstream NewFile;
 		NewFile.open(newfile, ios::out);
